@@ -5,8 +5,10 @@ using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class Grid : MonoBehaviour
+public class GameGrid : MonoBehaviour
 {
+    public bool isAIPlaying = false;
+
     private bool isRedTurn = true;
 
     public bool won => didWin(); //won lambda makes it so that
@@ -83,38 +85,24 @@ public class Grid : MonoBehaviour
     /// </summary>
     public void switchTurn()
     {
-        //change turns.
-        isRedTurn = !isRedTurn;
+        
 
-
-        for (int i = 0; i < slots.Count; i++)
-        {
-            //Vertical win check, HAVE NOT CHECKED FOR WHEN THEY START
-            //COINS OF A SPECIFIC COLOR HIGHER UP SWITCHING, CHECK FOR THAT.
-            if (!isColumnEmpty(i) && getColumnCoinCount(i) > 3)
-            {
-/*                List<Slot> fullSlots = getCoinsInColumn(i);
-                //Debug.Log("Column: " + i + " coins: " + getColumnCoinCount(i));
-                if (fullSlots != null)
-                {
-                    Debug.Log(fullSlots);
-                    if (fullSlots.TrueForAll(s => s.coin.CompareTag("Red")) || fullSlots.TrueForAll(s => s.coin.CompareTag("Yellow")))
-                    {
-                        Debug.Log("WIN");
-                    }
-                }*/
-            }
-
-            
-        }
 
         if (didWin())
         {
-            Debug.Log("WIN");
+            //call global winEvent and tell them who won.
+            WinEvent.Win(isRedTurn);
+        }
+        else
+        {
+            //change turns.
+            isRedTurn = !isRedTurn;
+            //call global switchTurnEvent.
+            SwitchTurnEvent.SwitchTurn(isRedTurn);
         }
        
 
-
+        
     }
 
     public void placeCoin(int column)
