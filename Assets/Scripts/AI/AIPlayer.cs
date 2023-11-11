@@ -5,15 +5,15 @@ using UnityEngine;
 public class AIPlayer : MonoBehaviour
 {
     //reference to the game grid
-    GameGrid grid;
+    public GameGrid grid;
 
     //if this AI is red, then all of their booleans for isMyTurn should be 
     //set normally from the events, but if they aren't red then they are 
     //yellow and this means that their isMyTurn should be the opposite
     //of what the event returns because the events are based off of a 
     //boolean called isRed.
-    private bool amIRed;
-    private bool isMyTurn;
+    public bool amIRed;
+    public bool isMyTurn;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +30,7 @@ public class AIPlayer : MonoBehaviour
         
     }
 
-    public void OnSwitchTurn(bool isRedTurn)
+    public virtual void OnSwitchTurn(bool isRedTurn)
     {
         isMyTurn = amIRed ? isRedTurn : !isRedTurn;
         if (isRedTurn)
@@ -43,7 +43,7 @@ public class AIPlayer : MonoBehaviour
         }
     }
 
-    private void OnWin(bool didRedWin)
+    public virtual void OnWin(bool didRedWin)
     {
         if (didRedWin)
         {

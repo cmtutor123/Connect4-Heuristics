@@ -5,9 +5,19 @@ using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+
+
 public class GameGrid : MonoBehaviour
 {
-    public bool isAIPlaying = false;
+
+    //p1 and p2 are AI only, they cannot represent a human player,
+    //we only use them to see if we should prevent the player from
+    //making moves during their turn.
+    public AIPlayer p1;
+    public bool isP1Playing => p1 != null;
+
+    public AIPlayer p2;
+    public bool isP2Playing => p2 != null;
 
     private bool isRedTurn = true;
 
@@ -21,7 +31,7 @@ public class GameGrid : MonoBehaviour
     public GameObject tile;
 
     //slots[x][y]
-    List<List<Slot>> slots = new List<List<Slot>>(7) { new List<Slot>(5), new List<Slot>(5), new List<Slot>(5), new List<Slot>(5), new List<Slot>(5), new List<Slot>(5), new List<Slot>(5) };
+    public List<List<Slot>> slots = new List<List<Slot>>(7) { new List<Slot>(5), new List<Slot>(5), new List<Slot>(5), new List<Slot>(5), new List<Slot>(5), new List<Slot>(5), new List<Slot>(5) };
 
     private void Awake()
     {
@@ -52,6 +62,11 @@ public class GameGrid : MonoBehaviour
             }
             lastX = x;
         }
+
+        if (isP1Playing)
+        p1.amIRed = true;
+        if (isP2Playing)
+        p2.amIRed = false;
     }
 
     // Start is called before the first frame update
@@ -105,9 +120,45 @@ public class GameGrid : MonoBehaviour
         
     }
 
+    //this version of the method can only be called by the player.
     public void placeCoin(int column)
     {
-        
+        //verify it is the humans turn, human is always red when against AI.
+        if (isP1Playing && !isRedTurn)
+        {
+            //TODO: play some sort of error audio and then grey out the column
+            //the player is trying to place a coin in.
+            Debug.Log("It is not the players turn.".Color("Blue"));
+            return;
+        }
+
+        if (!won && !isColumnFull(column))
+        {
+            //instatiate coin object at the location of the first empty slot.
+            GameObject t = GameObject.Instantiate(isRedTurn ? redCoin : yellowCoin, slots[column].Find(s => s.isEmpty()).position, Quaternion.identity);
+            //set the coin of the slot we just filled to be
+            //the coin component of the coin object we just
+            //created.
+            slots[column].Find(s => s.isEmpty()).coin = t.GetComponent<Coin>();
+
+            //Switch turns
+            switchTurn();
+        }
+        else
+        {
+            //TODO: play some audio and then also grey out the column for a moment.
+        }
+    }
+
+    public void placeCoin(int column, AIPlayer cpu)
+    {
+        //if it's not the AI's turn, don't let them make a move.
+        if (cpu.amIRed && !isRedTurn || !cpu.amIRed && isRedTurn)
+        {
+            Debug.LogWarning("IT IS NOT " + cpu.gameObject.name + " TURN, VERIFY YOU ARE NOT TRYING TO PLAY DURING ANOTHER PLAYER'S TURN");
+            //TODO: play audio and grey out the column they attempt to play on for a moment.
+            return;
+        }
 
         if (!won && !isColumnFull(column))
         {
