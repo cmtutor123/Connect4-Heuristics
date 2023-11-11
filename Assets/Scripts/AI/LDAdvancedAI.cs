@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
-public class LDAIExample : AIPlayer
+public class LDAdvancedAI : AIPlayer
 {
     Vector2 lastCoinPos;
 
@@ -31,22 +30,22 @@ public class LDAIExample : AIPlayer
     public int getBestColumn()
     {
 
-/*        //vertical placement
-        if (grid.slots[(int)lastCoinPos.x][(int)lastCoinPos.y + 1].isEmpty())
-        {
-            return (int)lastCoinPos.x;
-        }
+        /*        //vertical placement
+                if (grid.slots[(int)lastCoinPos.x][(int)lastCoinPos.y + 1].isEmpty())
+                {
+                    return (int)lastCoinPos.x;
+                }
 
-        //horizontal placement
-        if (lastCoinPos.x + 1 < grid.slots.Count && grid.slots[(int)lastCoinPos.x+1][(int)lastCoinPos.y].isEmpty())
-        {
-            return (int)lastCoinPos.x+1;
-        }
-        else if (lastCoinPos.x - 1 > -1 && grid.slots[(int)lastCoinPos.x - 1][(int)lastCoinPos.y].isEmpty())
-        {
-            return (int)lastCoinPos.x - 1;
-        }
-*/
+                //horizontal placement
+                if (lastCoinPos.x + 1 < grid.slots.Count && grid.slots[(int)lastCoinPos.x+1][(int)lastCoinPos.y].isEmpty())
+                {
+                    return (int)lastCoinPos.x+1;
+                }
+                else if (lastCoinPos.x - 1 > -1 && grid.slots[(int)lastCoinPos.x - 1][(int)lastCoinPos.y].isEmpty())
+                {
+                    return (int)lastCoinPos.x - 1;
+                }
+        */
 
 
         //Vertical Placement
@@ -55,7 +54,7 @@ public class LDAIExample : AIPlayer
             for (int j = 0; j < grid.slots[i].Count - 3; j++)
             {
                 if ((!grid.slots[i][j].isEmpty() && grid.slots[i][j].coin.CompareTag(this.tag) || grid.slots[i][j].isEmpty())
-                    && (!grid.slots[i][j + 1].isEmpty() && grid.slots[i][j+1].coin.CompareTag(this.tag) || grid.slots[i][j + 1].isEmpty())
+                    && (!grid.slots[i][j + 1].isEmpty() && grid.slots[i][j + 1].coin.CompareTag(this.tag) || grid.slots[i][j + 1].isEmpty())
                     && (!grid.slots[i][j + 2].isEmpty() && grid.slots[i][j + 2].coin.CompareTag(this.tag) || grid.slots[i][j + 2].isEmpty())
                     && (!grid.slots[i][j + 3].isEmpty() && grid.slots[i][j + 3].coin.CompareTag(this.tag) || grid.slots[i][j + 3].isEmpty())
                     )

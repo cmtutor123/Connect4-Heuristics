@@ -22,6 +22,7 @@ public class AIPlayer : MonoBehaviour
         //add callback to OnSwitchTurn global event for our OnSwitchTurn method.
         SwitchTurnEvent.OnSwitchTurn += OnSwitchTurn;
         WinEvent.OnWin += OnWin;
+        this.tag = amIRed ? "Red" : "Yellow";
     }
 
     // Update is called once per frame

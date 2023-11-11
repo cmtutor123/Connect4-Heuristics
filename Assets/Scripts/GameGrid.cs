@@ -25,6 +25,9 @@ public class GameGrid : MonoBehaviour
                                  //this variable is always set equal
                                  //to the didWin() call output.
 
+    //last position a coin was placed at.
+    public Vector2 lastCoinPos;
+
     //coin prefabs
     public GameObject redCoin;
     public GameObject yellowCoin;
@@ -140,7 +143,8 @@ public class GameGrid : MonoBehaviour
             //the coin component of the coin object we just
             //created.
             slots[column].Find(s => s.isEmpty()).coin = t.GetComponent<Coin>();
-
+            //set lastCoinPos to be the position of the newly created coin.
+            lastCoinPos = new Vector2(column, slots[column].FindIndex(s => s.isEmpty()) - 1);
             //Switch turns
             switchTurn();
         }
@@ -168,7 +172,7 @@ public class GameGrid : MonoBehaviour
             //the coin component of the coin object we just
             //created.
             slots[column].Find(s => s.isEmpty()).coin = t.GetComponent<Coin>();
-
+            lastCoinPos = new Vector2(column, slots[column].FindIndex(s => s.isEmpty()) - 1);
             //Switch turns
             switchTurn();
         }

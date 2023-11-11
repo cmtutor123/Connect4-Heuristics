@@ -445,6 +445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   p1: {fileID: 0}
   p2: {fileID: 0}
+  lastCoinPos: {x: 0, y: 0}
   redCoin: {fileID: 1836455499306930255, guid: 1c49a8da991ed454dafd8027b5bfbb81, type: 3}
   yellowCoin: {fileID: 815239370483795244, guid: 80c0494b8ad519a41ab65fd20edc2fe3, type: 3}
   tile: {fileID: 5511019902197819809, guid: ee656214a93a70c4b86573ea1a1435ee, type: 3}
@@ -1757,7 +1758,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1623252207}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 724a2bc14df96c141a2972aabf0b5588, type: 3}
+  m_Script: {fileID: 11500000, guid: 5ec8b80bf1134224c8d0d181f74299cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 0}

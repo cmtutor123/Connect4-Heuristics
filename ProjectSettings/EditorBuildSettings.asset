@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/AIVsPlayerScene.unity
     guid: d2d90692b5ee64845bd082e6a7e02068
+  - enabled: 1
+    path: Assets/Scenes/AdvancedVsPlayerScene.unity
+    guid: cd429f197744d51488d821564dd5f61e
   m_configObjects: {}
