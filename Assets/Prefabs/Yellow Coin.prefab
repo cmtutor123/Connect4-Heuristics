@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7071068853222207297}
   - component: {fileID: 8642540688917935040}
   m_Layer: 0
-  m_Name: CoinY
+  m_Name: Yellow Coin
   m_TagString: Yellow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
