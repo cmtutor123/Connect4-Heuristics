@@ -15,16 +15,28 @@ public class AIPlayer : MonoBehaviour
     public bool amIRed;
     public bool isMyTurn;
 
-    // Start is called before the first frame update
-    void Start()
+    private void OnEnable()
     {
-        grid = FindObjectOfType<GameGrid>();
         //add callback to OnGameStart global event for our OnGameStart method.
         GameStartEvent.OnGameStart += OnGameStart;
         //add callback to OnSwitchTurn global event for our OnSwitchTurn method.
         SwitchTurnEvent.OnSwitchTurn += OnSwitchTurn;
         //add callback to OnWin global event for our OnWin method.
         WinEvent.OnWin += OnWin;
+    }
+
+    private void OnDisable()
+    {
+        //remove callbacks so when we switch scenes these don't get called anymore.
+        GameStartEvent.OnGameStart -= OnGameStart;
+        SwitchTurnEvent.OnSwitchTurn -= OnSwitchTurn;
+        WinEvent.OnWin -= OnWin;
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        grid = FindObjectOfType<GameGrid>();
         this.tag = amIRed ? "Red" : "Yellow";
     }
 
