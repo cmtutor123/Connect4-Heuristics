@@ -19,8 +19,11 @@ public class AIPlayer : MonoBehaviour
     void Start()
     {
         grid = FindObjectOfType<GameGrid>();
+        //add callback to OnGameStart global event for our OnGameStart method.
+        GameStartEvent.OnGameStart += OnGameStart;
         //add callback to OnSwitchTurn global event for our OnSwitchTurn method.
         SwitchTurnEvent.OnSwitchTurn += OnSwitchTurn;
+        //add callback to OnWin global event for our OnWin method.
         WinEvent.OnWin += OnWin;
         this.tag = amIRed ? "Red" : "Yellow";
     }
@@ -29,6 +32,12 @@ public class AIPlayer : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public virtual void OnGameStart(bool isRedTurn)
+    {
+        isMyTurn = amIRed ? isRedTurn : !isRedTurn;
+        //this is called on game start.
     }
 
     public virtual void OnSwitchTurn(bool isRedTurn)

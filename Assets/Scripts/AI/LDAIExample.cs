@@ -7,6 +7,20 @@ public class LDAIExample : AIPlayer
 {
     Vector2 lastCoinPos;
 
+    public override void OnGameStart(bool isRedTurn)
+    {
+        //base.OnGameStart(isRedTurn);
+        this.isMyTurn = amIRed ? isRedTurn : !isRedTurn;
+        if (isMyTurn)
+        {
+            //if best spot is open still, let's place a coin there.
+            if (grid.slots[3][0].isEmpty())
+            {
+                grid.placeCoin(3);
+            }
+        }
+    }
+
     //override OnSwitchTurn and use it to make actions during your turn.
     public override void OnSwitchTurn(bool isRedTurn)
     {

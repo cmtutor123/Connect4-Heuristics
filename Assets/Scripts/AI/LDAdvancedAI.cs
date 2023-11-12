@@ -5,7 +5,7 @@ using UnityEngine;
 public class LDAdvancedAI : AIPlayer
 {
     [Range(0, 3)]
-    public int drawDirection = 0;
+    public int curDrawDirection = 0;
     public Vector2 slotNeighbourDrawPos = new Vector2(0, 0);
     public Vector2 slotNeighbourRect = new Vector2(1, 1);
 
@@ -17,6 +17,24 @@ public class LDAdvancedAI : AIPlayer
     //and if there aren't then fill the next adjacent slot. 
     //start with coding horizontal and vertical then do diagonal later.
     private List<Slot> placedCoinSlots = new List<Slot>();
+
+    public override void OnGameStart(bool isRedTurn)
+    {
+        //base.OnGameStart(isRedTurn);
+        this.isMyTurn = amIRed ? isRedTurn : !isRedTurn;
+        if (isMyTurn)
+        {
+            //lets make it so that at the beginning if we are going
+            //first or the slot is open we should select the middle
+            //slot.
+            if (grid.slots[3][0].isEmpty())
+            {
+                grid.placeCoin(3);
+                //add the coin we just put in that column.
+                placedCoinSlots.Add(grid.slots[3].Find(s => !s.isEmpty()));
+            }
+        }
+    }
 
     //override OnSwitchTurn and use it to make actions during your turn.
     public override void OnSwitchTurn(bool isRedTurn)
@@ -66,15 +84,7 @@ public class LDAdvancedAI : AIPlayer
         //and if those coins are in the same direction then we increase the weight of the column if 
         //placing a coin there would count as a win.
 
-        //lets start at the origin slot.
-        //lets make it so that at the beginning if we are going
-        //first or the slot is open we should select the middle
-        //slot.
 
-        if (grid.slots[3][0].isEmpty())
-        {
-            return 3;
-        }
 
         //check neighbours, check if there are any of the same color, and if there are any threats.
         //if there are only empty slots check for threats in all directions 4 out and first direction with
@@ -83,7 +93,7 @@ public class LDAdvancedAI : AIPlayer
         //maybe try to prioritize creating the T shape that creates an unwinnable situation
         //for the other player?
 
-        //WAIT because this is a 3x3 array (roughly) everytime Nvm
+
         foreach (Slot s in placedCoinSlots)
         {
             int currentDesiredColumn;
@@ -91,99 +101,28 @@ public class LDAdvancedAI : AIPlayer
             List<List<Slot>> neighbours = getNeighbours((int)s.arrayPosition.x, (int)s.arrayPosition.y, 1, 1);
             //start movement direction for searching if we can create a continuous line of 4 by
             //first looking right, then go through all directions.
-            Vector2 currentDir = new Vector2(1, 0);
-            Vector2 vertical = new Vector2(0, 1);
-            Vector2 diagonalR = new Vector2(1, 1);
-            Vector2 diagonalL = new Vector2(-1, 1);
+            
 
             //if this coin is surrounded by red then skip it.
-            if (!neighbours.TrueForAll(s => s.TrueForAll(sl => sl.coin.CompareTag(this.tag))))
+            if (neighbours.TrueForAll(s => s.TrueForAll(sl => !sl.isEmpty())) && !neighbours.TrueForAll(s => s.TrueForAll(sl => sl.coin.CompareTag(this.tag))))
             {
                 continue;
             }
-            
+
             //horizontal desireability check
-            for (int i = 0; i < neighbours[0].Count; i++)
+            //we make the radius 2 in each direction 
+            //so we get an array of 5 slots to check
+            //this means we can check from the beginning
+            //coin in the list to whichever direction.
+            List<Slot> horizontalSlots = getDirection(0, (int)s.arrayPosition.x, (int)s.arrayPosition.y, 2, 2);
+            //if either all the coins in the row are the same color as us or they are empty we place a coin in the 
+            //first horizontal open slot relative to ourselves.
+            if (horizontalSlots.TrueForAll(hs => !hs.isEmpty() && hs.coin.CompareTag(this.tag) || hs.isEmpty()))
             {
-                if (neighbours[i][0].isEmpty())
-                {
-                    //if the next slot to the right is empty then let's continue looking right to make sure
-                    //there are no threats.
-                    continue;
-                }
-                else if (neighbours[i][0].coin.CompareTag(this.tag))
-                {
-                    //if the tag of the coin is the same as this objects tag (this is our coin)
-                    //then let's move to the right and make sure either the slot after this slot
-                    //is empty or there are no threats.
-                    neighbours = getNeighbours(i, 0, 1, 1);
-                    currentDesiredColumn = i;
-                }
+                //return column number of the first empty slot.
+                return horizontalSlots.FindIndex(s => s.isEmpty());
             }
             
-        }
-
-        for (int i = 0; i < grid.slots.Count; i++)
-        {
-            for (int j = 0; j < grid.slots[i].Count; j++)
-            {
-                if ((!grid.slots[i][j].isEmpty() && grid.slots[i][j].coin.CompareTag(this.tag) || grid.slots[i][j].isEmpty()))
-                {
-                    //weights[i] = ;
-                }
-            }
-        }
-
-
-                /*        //vertical placement
-                        if (grid.slots[(int)lastCoinPos.x][(int)lastCoinPos.y + 1].isEmpty())
-                        {
-                            return (int)lastCoinPos.x;
-                        }
-
-                        //horizontal placement
-                        if (lastCoinPos.x + 1 < grid.slots.Count && grid.slots[(int)lastCoinPos.x+1][(int)lastCoinPos.y].isEmpty())
-                        {
-                            return (int)lastCoinPos.x+1;
-                        }
-                        else if (lastCoinPos.x - 1 > -1 && grid.slots[(int)lastCoinPos.x - 1][(int)lastCoinPos.y].isEmpty())
-                        {
-                            return (int)lastCoinPos.x - 1;
-                        }
-                */
-
-
-                //Vertical Placement
-                for (int i = 0; i < grid.slots.Count; i++)
-        {
-            for (int j = 0; j < grid.slots[i].Count - 3; j++)
-            {
-                if ((!grid.slots[i][j].isEmpty() && grid.slots[i][j].coin.CompareTag(this.tag) || grid.slots[i][j].isEmpty())
-                    && (!grid.slots[i][j + 1].isEmpty() && grid.slots[i][j + 1].coin.CompareTag(this.tag) || grid.slots[i][j + 1].isEmpty())
-                    && (!grid.slots[i][j + 2].isEmpty() && grid.slots[i][j + 2].coin.CompareTag(this.tag) || grid.slots[i][j + 2].isEmpty())
-                    && (!grid.slots[i][j + 3].isEmpty() && grid.slots[i][j + 3].coin.CompareTag(this.tag) || grid.slots[i][j + 3].isEmpty())
-                    )
-                {
-                    return i;
-                }
-            }
-        }
-
-        //Horizontal Placement
-        for (int i = 0; i < grid.slots.Count - 3; i++)
-        {
-            for (int j = 0; j < grid.slots[i].Count; j++)
-            {
-
-                if ((!grid.slots[i][j].isEmpty() && grid.slots[i][j].coin.CompareTag(this.tag) || grid.slots[i][j].isEmpty())
-                    && (!grid.slots[i + 1][j].isEmpty() && grid.slots[i + 1][j].coin.CompareTag(this.tag) || grid.slots[i + 1][j].isEmpty())
-                    && (!grid.slots[i + 2][j].isEmpty() && grid.slots[i + 2][j].coin.CompareTag(this.tag) || grid.slots[i + 2][j].isEmpty())
-                    && (!grid.slots[i + 3][j].isEmpty() && grid.slots[i + 3][j].coin.CompareTag(this.tag) || grid.slots[i + 3][j].isEmpty())
-                    )
-                {
-                    return i;
-                }
-            }
         }
 
         //return -1 if we somehow don't decide. This will throw an error.
@@ -217,7 +156,7 @@ public class LDAdvancedAI : AIPlayer
 
     public List<List<Slot>> getNeighbours(int x, int y, int xRadius, int yRadius)
     {
-        List<List<Slot>> neighbours = new List<List<Slot>>(7);
+        List<List<Slot>> neighbours = new List<List<Slot>>() { new List<Slot>(), new List<Slot>(), new List<Slot>(), new List<Slot>(), new List<Slot>(), new List<Slot>(), new List<Slot>() };
 
         int columnLimit = grid.slots.Count;
         for (int i = Mathf.Max(0, x - xRadius); i <= Mathf.Min(Mathf.Clamp(x + xRadius, 0, grid.slots.Count - 1), columnLimit); i++)
@@ -225,6 +164,7 @@ public class LDAdvancedAI : AIPlayer
             int rowLimit = grid.slots[i].Count;
             for (int j = Mathf.Max(0, y - yRadius); j <= Mathf.Min(Mathf.Clamp(y + yRadius, 0, grid.slots[i].Count - 1), rowLimit); j++)
             {
+                if (grid.slots[i] != null && grid.slots[i][j] != null)
                 neighbours[i].Add(grid.slots[i][j]);
             }
         }
@@ -232,7 +172,7 @@ public class LDAdvancedAI : AIPlayer
     }
 
     //draws each slot in one of 8 directions relative to a given slot position
-    public void drawDirections(int direction, int x, int y, int xRadius, int yRadius)
+    public void drawDirection(int direction, int x, int y, int xRadius, int yRadius)
     {
         //do a switch statement depending on the direction we are given,
         //0: horizontal
@@ -251,7 +191,7 @@ public class LDAdvancedAI : AIPlayer
                     for (int j = Mathf.Max(0, y - yRadius); j <= Mathf.Min(Mathf.Clamp(y + yRadius, 0, grid.slots[i].Count - 1), rowLimit); j++)
                     {
                         //not horizontal, then skip this iteration.
-                        if (!(x - i != 0 && y - j == 0))
+                        if (!((x - i != 0 && y - j == 0) || i == x && j == y))
                         {
                             continue;
                         }
@@ -282,7 +222,7 @@ public class LDAdvancedAI : AIPlayer
                     for (int j = Mathf.Max(0, y - yRadius); j <= Mathf.Min(Mathf.Clamp(y + yRadius, 0, grid.slots[i].Count - 1), rowLimit); j++)
                     {
                         //not vertical, then skip this iteration.
-                        if (!(x - i == 0 && y - j != 0))
+                        if (!((x - i == 0 && y - j != 0) || i == x && j == y))
                         {
                             continue;
                         }
@@ -372,7 +312,7 @@ public class LDAdvancedAI : AIPlayer
         }
     }
 
-    public List<Slot> getDirections(int direction, int x, int y, int xRadius, int yRadius)
+    public List<Slot> getDirection(int direction, int x, int y, int xRadius, int yRadius)
     {
         //do a switch statement depending on the direction we are given,
         //0: horizontal
@@ -393,7 +333,7 @@ public class LDAdvancedAI : AIPlayer
                     for (int j = Mathf.Max(0, y - yRadius); j <= Mathf.Min(Mathf.Clamp(y + yRadius, 0, grid.slots[i].Count - 1), rowLimit); j++)
                     {
                         //not horizontal, then skip this iteration.
-                        if (!(x - i != 0 && y - j == 0))
+                        if (!((x - i != 0 && y - j == 0) || i == x && j == y))
                         {
                             continue;
                         }
@@ -409,7 +349,7 @@ public class LDAdvancedAI : AIPlayer
                     for (int j = Mathf.Max(0, y - yRadius); j <= Mathf.Min(Mathf.Clamp(y + yRadius, 0, grid.slots[i].Count - 1), rowLimit); j++)
                     {
                         //not vertical, then skip this iteration.
-                        if (!(x - i == 0 && y - j != 0))
+                        if (!((x - i == 0 && y - j != 0) || i == x && j == y))
                         {
                             continue;
                         }
@@ -459,6 +399,6 @@ public class LDAdvancedAI : AIPlayer
     private void OnDrawGizmos()
     {
         if (grid != null)
-        drawDirections(drawDirection, (int)slotNeighbourDrawPos.x, (int)slotNeighbourDrawPos.y, (int)slotNeighbourRect.x, (int)slotNeighbourRect.y);
+        drawDirection(curDrawDirection, (int)slotNeighbourDrawPos.x, (int)slotNeighbourDrawPos.y, (int)slotNeighbourRect.x, (int)slotNeighbourRect.y);
     }
 }

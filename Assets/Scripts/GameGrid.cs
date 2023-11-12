@@ -66,16 +66,17 @@ public class GameGrid : MonoBehaviour
             lastX = x;
         }
 
-        if (isP1Playing)
-        p1.amIRed = true;
-        if (isP2Playing)
-        p2.amIRed = false;
+        if (isP1Playing && isP2Playing)
+        {
+            p1.amIRed = true;
+            p2.amIRed = false;
+        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -94,6 +95,13 @@ public class GameGrid : MonoBehaviour
                 s.drawGizmos();
             }
         }
+    }
+
+    //called when player clicks the start button in the menu.
+    public void startGame()
+    {
+        //send global Game Start event
+        GameStartEvent.GameStart(isRedTurn);
     }
 
     /// <summary>
@@ -127,7 +135,7 @@ public class GameGrid : MonoBehaviour
     public void placeCoin(int column)
     {
         //verify it is the humans turn, human is always red when against AI.
-        if (isP1Playing && !isRedTurn)
+        if (isP1Playing && p1.amIRed && isRedTurn || isP1Playing && !p1.amIRed && !isRedTurn)
         {
             //TODO: play some sort of error audio and then grey out the column
             //the player is trying to place a coin in.
@@ -157,12 +165,14 @@ public class GameGrid : MonoBehaviour
     public void placeCoin(int column, AIPlayer cpu)
     {
         //if it's not the AI's turn, don't let them make a move.
-        if (cpu.amIRed && !isRedTurn || !cpu.amIRed && isRedTurn)
+        if (/*!(cpu == p1 && cpu != p2) || !(cpu == p2 && cpu != p1) && */cpu.amIRed && !isRedTurn || !cpu.amIRed && isRedTurn)
         {
             Debug.LogWarning("IT IS NOT " + cpu.gameObject.name + " TURN, VERIFY YOU ARE NOT TRYING TO PLAY DURING ANOTHER PLAYER'S TURN");
             //TODO: play audio and grey out the column they attempt to play on for a moment.
             return;
         }
+
+        //Debug.Log("Who made move: " + cpu.gameObject.name.Color(isRedTurn ? "red" : "yellow"));
 
         if (!won && !isColumnFull(column))
         {

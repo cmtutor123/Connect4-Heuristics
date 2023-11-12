@@ -58,6 +58,9 @@ public class TitleScreen : MonoBehaviour
         showMenu = !showMenu;
         menuCanvas.enabled = showMenu;
         gameCanvas.enabled = !showMenu;
+
+        //start the game.
+        FindObjectOfType<GameGrid>().startGame();
     }
 
     public void exitGame()

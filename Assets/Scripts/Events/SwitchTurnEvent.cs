@@ -9,7 +9,7 @@ public class SwitchTurnEvent : MonoBehaviour
 
     public static void SwitchTurn(bool isRedTurn)
     {
-        Debug.Log("Switch Turn");
+        Debug.Log("Switch Turn".Color("blue"));
         OnSwitchTurn?.Invoke(isRedTurn);
     }
 }

@@ -9,7 +9,7 @@ public class WinEvent : MonoBehaviour
 
     public static void Win(bool didRedWin)
     {
-        Debug.Log("Switch Turn");
+        Debug.Log("Switch Turn".Color("blue"));
         OnWin?.Invoke(didRedWin);
     }
 }
