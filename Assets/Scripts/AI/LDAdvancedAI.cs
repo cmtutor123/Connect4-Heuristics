@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LDAdvancedAI : AIPlayer
 {
+    [Range(0, 3)]
+    public int drawDirection = 0;
     public Vector2 slotNeighbourDrawPos = new Vector2(0, 0);
     public Vector2 slotNeighbourRect = new Vector2(1, 1);
 
@@ -191,11 +193,11 @@ public class LDAdvancedAI : AIPlayer
     public void drawNeighbours(int x, int y, int xRadius, int yRadius)
     {
         string s = "";
-        int column_limit = grid.slots.Count;
-        for (int i = Mathf.Max(0, x-xRadius); i <= Mathf.Min(Mathf.Clamp(x+xRadius, 0, grid.slots.Count - 1), column_limit); i++)
+        int columnLimit = grid.slots.Count;
+        for (int i = Mathf.Max(0, x-xRadius); i <= Mathf.Min(Mathf.Clamp(x+xRadius, 0, grid.slots.Count - 1), columnLimit); i++)
         {
-            int row_limit = grid.slots[i].Count;
-            for (int j = Mathf.Max(0, y -yRadius); j <= Mathf.Min(Mathf.Clamp(y + yRadius, 0, grid.slots[i].Count - 1), row_limit); j++)
+            int rowLimit = grid.slots[i].Count;
+            for (int j = Mathf.Max(0, y -yRadius); j <= Mathf.Min(Mathf.Clamp(y + yRadius, 0, grid.slots[i].Count - 1), rowLimit); j++)
             {
                 s += grid.slots[i][j].position.ToString().Color("purple") + " ";
                 if (!grid.slots[i][j].isEmpty())
@@ -217,11 +219,11 @@ public class LDAdvancedAI : AIPlayer
     {
         List<List<Slot>> neighbours = new List<List<Slot>>(7);
 
-        int column_limit = grid.slots.Count;
-        for (int i = Mathf.Max(0, x - xRadius); i <= Mathf.Min(Mathf.Clamp(x + xRadius, 0, grid.slots.Count - 1), column_limit); i++)
+        int columnLimit = grid.slots.Count;
+        for (int i = Mathf.Max(0, x - xRadius); i <= Mathf.Min(Mathf.Clamp(x + xRadius, 0, grid.slots.Count - 1), columnLimit); i++)
         {
-            int row_limit = grid.slots[i].Count;
-            for (int j = Mathf.Max(0, y - yRadius); j <= Mathf.Min(Mathf.Clamp(y + yRadius, 0, grid.slots[i].Count - 1), row_limit); j++)
+            int rowLimit = grid.slots[i].Count;
+            for (int j = Mathf.Max(0, y - yRadius); j <= Mathf.Min(Mathf.Clamp(y + yRadius, 0, grid.slots[i].Count - 1), rowLimit); j++)
             {
                 neighbours[i].Add(grid.slots[i][j]);
             }
@@ -230,49 +232,233 @@ public class LDAdvancedAI : AIPlayer
     }
 
     //draws each slot in one of 8 directions relative to a given slot position
-    public void drawDirections(int x, int y, int xRadius, int yRadius)
+    public void drawDirections(int direction, int x, int y, int xRadius, int yRadius)
     {
-        string s = "";
-        int column_limit = grid.slots.Count;
-        for (int i = Mathf.Max(0, x - xRadius); i <= Mathf.Min(Mathf.Clamp(x + xRadius, 0, grid.slots.Count - 1), column_limit); i++)
+        //do a switch statement depending on the direction we are given,
+        //0: horizontal
+        //1: vertical
+        //2: diagonalR  --> /
+        //3: diagonalL  --> \
+
+        int columnLimit = grid.slots.Count;
+        switch (direction)
         {
+            case 0:
+                for (int i = Mathf.Max(0, x - xRadius); i <= Mathf.Min(Mathf.Clamp(x + xRadius, 0, grid.slots.Count - 1), columnLimit); i++)
+                {
 
-            int row_limit = grid.slots[i].Count;
-            for (int j = Mathf.Max(0, y - yRadius); j <= Mathf.Min(Mathf.Clamp(y + yRadius, 0, grid.slots[i].Count - 1), row_limit); j++)
-            {
-                //not one of the 8 directions, then skip this iteration.
-                if (!((x - i != 0 && y - j == 0) || (x - i == 0 && y - j != 0) || Mathf.Abs(y - j) == Mathf.Abs(x - i)))
-                {
-                    s += "*".Color("white") + " ";
-                    continue;
+                    int rowLimit = grid.slots[i].Count;
+                    for (int j = Mathf.Max(0, y - yRadius); j <= Mathf.Min(Mathf.Clamp(y + yRadius, 0, grid.slots[i].Count - 1), rowLimit); j++)
+                    {
+                        //not horizontal, then skip this iteration.
+                        if (!(x - i != 0 && y - j == 0))
+                        {
+                            continue;
+                        }
+                        if (!grid.slots[i][j].isEmpty())
+                        {
+                            if (!grid.slots[i][j].coin.CompareTag(this.tag))
+                            {
+                                Gizmos.color = Color.red;
+                            }
+                            else
+                            {
+                                Gizmos.color = Color.green;
+                            }
+                        }
+                        else
+                        {
+                            Gizmos.color = Color.magenta;
+                        }
+                        Gizmos.DrawSphere(grid.slots[i][j].position, 0.5f);
+                    }
                 }
+                break;
+            case 1:
+                for (int i = Mathf.Max(0, x - xRadius); i <= Mathf.Min(Mathf.Clamp(x + xRadius, 0, grid.slots.Count - 1), columnLimit); i++)
+                {
 
-                s += grid.slots[i][j].position.ToString().Color("purple") + " ";
-                if (!grid.slots[i][j].isEmpty())
-                {
-                    if (!grid.slots[i][j].coin.CompareTag(this.tag))
+                    int rowLimit = grid.slots[i].Count;
+                    for (int j = Mathf.Max(0, y - yRadius); j <= Mathf.Min(Mathf.Clamp(y + yRadius, 0, grid.slots[i].Count - 1), rowLimit); j++)
                     {
-                        Gizmos.color = Color.red;
-                    }
-                    else
-                    {
-                        Gizmos.color = Color.green;
+                        //not vertical, then skip this iteration.
+                        if (!(x - i == 0 && y - j != 0))
+                        {
+                            continue;
+                        }
+                        if (!grid.slots[i][j].isEmpty())
+                        {
+                            if (!grid.slots[i][j].coin.CompareTag(this.tag))
+                            {
+                                Gizmos.color = Color.red;
+                            }
+                            else
+                            {
+                                Gizmos.color = Color.green;
+                            }
+                        }
+                        else
+                        {
+                            Gizmos.color = Color.magenta;
+                        }
+                        Gizmos.DrawSphere(grid.slots[i][j].position, 0.5f);
                     }
                 }
-                else
+                break;
+            case 2:
+                for (int i = Mathf.Max(0, x - xRadius); i <= Mathf.Min(Mathf.Clamp(x + xRadius, 0, grid.slots.Count - 1), columnLimit); i++)
                 {
-                    Gizmos.color = Color.magenta;
+
+                    int rowLimit = grid.slots[i].Count;
+                    for (int j = Mathf.Max(0, y - yRadius); j <= Mathf.Min(Mathf.Clamp(y + yRadius, 0, grid.slots[i].Count - 1), rowLimit); j++)
+                    {
+                        //not diagonal R, then skip this iteration.
+                        if (!(y - j == x - i)) //--> /
+                        {
+                            continue;
+                        }
+                        if (!grid.slots[i][j].isEmpty())
+                        {
+                            if (!grid.slots[i][j].coin.CompareTag(this.tag))
+                            {
+                                Gizmos.color = Color.red;
+                            }
+                            else
+                            {
+                                Gizmos.color = Color.green;
+                            }
+                        }
+                        else
+                        {
+                            Gizmos.color = Color.magenta;
+                        }
+                        Gizmos.DrawSphere(grid.slots[i][j].position, 0.5f);
+                    }
                 }
-                Gizmos.DrawSphere(grid.slots[i][j].position, 0.5f);
-            }
-            s += "\n";
+                break;
+            case 3:
+                for (int i = Mathf.Max(0, x - xRadius); i <= Mathf.Min(Mathf.Clamp(x + xRadius, 0, grid.slots.Count - 1), columnLimit); i++)
+                {
+
+                    int rowLimit = grid.slots[i].Count;
+                    for (int j = Mathf.Max(0, y - yRadius); j <= Mathf.Min(Mathf.Clamp(y + yRadius, 0, grid.slots[i].Count - 1), rowLimit); j++)
+                    {
+                        //not diagonalL, then skip this iteration.
+                        if (!(-1 * (y - j) == x - i))// --> \
+                        {
+                            continue;
+                        }
+                        if (!grid.slots[i][j].isEmpty())
+                        {
+                            if (!grid.slots[i][j].coin.CompareTag(this.tag))
+                            {
+                                Gizmos.color = Color.red;
+                            }
+                            else
+                            {
+                                Gizmos.color = Color.green;
+                            }
+                        }
+                        else
+                        {
+                            Gizmos.color = Color.magenta;
+                        }
+                        Gizmos.DrawSphere(grid.slots[i][j].position, 0.5f);
+                    }
+                }
+                break;
+            default:
+                break;
         }
-        print(s);
+    }
+
+    public List<Slot> getDirections(int direction, int x, int y, int xRadius, int yRadius)
+    {
+        //do a switch statement depending on the direction we are given,
+        //0: horizontal
+        //1: vertical
+        //2: diagonalR  --> /
+        //3: diagonalL  --> \
+
+        List<Slot> temp = new List<Slot>();
+
+        int columnLimit = grid.slots.Count;
+        switch (direction)
+        {
+            case 0:
+                for (int i = Mathf.Max(0, x - xRadius); i <= Mathf.Min(Mathf.Clamp(x + xRadius, 0, grid.slots.Count - 1), columnLimit); i++)
+                {
+
+                    int rowLimit = grid.slots[i].Count;
+                    for (int j = Mathf.Max(0, y - yRadius); j <= Mathf.Min(Mathf.Clamp(y + yRadius, 0, grid.slots[i].Count - 1), rowLimit); j++)
+                    {
+                        //not horizontal, then skip this iteration.
+                        if (!(x - i != 0 && y - j == 0))
+                        {
+                            continue;
+                        }
+                        temp.Add(grid.slots[i][j]);
+                    }
+                }
+                break;
+            case 1:
+                for (int i = Mathf.Max(0, x - xRadius); i <= Mathf.Min(Mathf.Clamp(x + xRadius, 0, grid.slots.Count - 1), columnLimit); i++)
+                {
+
+                    int rowLimit = grid.slots[i].Count;
+                    for (int j = Mathf.Max(0, y - yRadius); j <= Mathf.Min(Mathf.Clamp(y + yRadius, 0, grid.slots[i].Count - 1), rowLimit); j++)
+                    {
+                        //not vertical, then skip this iteration.
+                        if (!(x - i == 0 && y - j != 0))
+                        {
+                            continue;
+                        }
+                        temp.Add(grid.slots[i][j]);
+                    }
+                }
+                break;
+            case 2:
+                for (int i = Mathf.Max(0, x - xRadius); i <= Mathf.Min(Mathf.Clamp(x + xRadius, 0, grid.slots.Count - 1), columnLimit); i++)
+                {
+
+                    int rowLimit = grid.slots[i].Count;
+                    for (int j = Mathf.Max(0, y - yRadius); j <= Mathf.Min(Mathf.Clamp(y + yRadius, 0, grid.slots[i].Count - 1), rowLimit); j++)
+                    {
+                        //not diagonal R, then skip this iteration.
+                        if (!(y - j == x - i)) //--> /
+                        {
+                            continue;
+                        }
+                        temp.Add(grid.slots[i][j]);
+                    }
+                }
+                break;
+            case 3:
+                for (int i = Mathf.Max(0, x - xRadius); i <= Mathf.Min(Mathf.Clamp(x + xRadius, 0, grid.slots.Count - 1), columnLimit); i++)
+                {
+
+                    int rowLimit = grid.slots[i].Count;
+                    for (int j = Mathf.Max(0, y - yRadius); j <= Mathf.Min(Mathf.Clamp(y + yRadius, 0, grid.slots[i].Count - 1), rowLimit); j++)
+                    {
+                        //not diagonalL, then skip this iteration.
+                        if (!(-1 * (y - j) == x - i))// --> \
+                        {
+                            continue;
+                        }
+                        temp.Add(grid.slots[i][j]);
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+
+        return temp;
     }
 
     private void OnDrawGizmos()
     {
         if (grid != null)
-        drawDirections((int)slotNeighbourDrawPos.x, (int)slotNeighbourDrawPos.y, (int)slotNeighbourRect.x, (int)slotNeighbourRect.y);
+        drawDirections(drawDirection, (int)slotNeighbourDrawPos.x, (int)slotNeighbourDrawPos.y, (int)slotNeighbourRect.x, (int)slotNeighbourRect.y);
     }
 }
