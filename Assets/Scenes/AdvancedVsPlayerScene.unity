@@ -444,7 +444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   p1: {fileID: 0}
-  p2: {fileID: 0}
+  p2: {fileID: 1623252209}
   lastCoinPos: {x: 0, y: 0}
   redCoin: {fileID: 1836455499306930255, guid: 1c49a8da991ed454dafd8027b5bfbb81, type: 3}
   yellowCoin: {fileID: 815239370483795244, guid: 80c0494b8ad519a41ab65fd20edc2fe3, type: 3}
@@ -795,6 +795,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 691795766}
   m_CullTransparentMesh: 1
+--- !u!1 &747610514
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 747610516}
+  - component: {fileID: 747610515}
+  m_Layer: 0
+  m_Name: CPU_2[Controls Yellow]
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &747610515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747610514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 724a2bc14df96c141a2972aabf0b5588, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grid: {fileID: 0}
+  amIRed: 0
+  isMyTurn: 0
+--- !u!4 &747610516
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747610514}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.33902574, y: 0.6912514, z: 2.468831}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &813999212
 GameObject:
   m_ObjectHideFlags: 0
@@ -1728,7 +1775,7 @@ GameObject:
   - component: {fileID: 1623252208}
   - component: {fileID: 1623252209}
   m_Layer: 0
-  m_Name: CPU_1[Controls Yellow]
+  m_Name: CPU_1[Controls Red]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1762,7 +1809,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 0}
-  amIRed: 0
+  amIRed: 1
   isMyTurn: 0
 --- !u!1 &1709491593
 GameObject:
@@ -1907,3 +1954,4 @@ SceneRoots:
   - {fileID: 110618649}
   - {fileID: 813999214}
   - {fileID: 1623252208}
+  - {fileID: 747610516}
