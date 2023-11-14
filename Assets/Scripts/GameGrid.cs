@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ using UnityEngine.UIElements;
 
 public class GameGrid : MonoBehaviour
 {
+    public bool slowMo = false;
 
     //p1 and p2 are AI only, they cannot represent a human player,
     //we only use them to see if we should prevent the player from
@@ -111,7 +113,6 @@ public class GameGrid : MonoBehaviour
     /// </summary>
     public void switchTurn()
     {
-        
 
 
         if (didWin())
@@ -154,7 +155,14 @@ public class GameGrid : MonoBehaviour
             //set lastCoinPos to be the position of the newly created coin.
             lastCoinPos = new Vector2(column, slots[column].FindIndex(s => s.isEmpty()) - 1);
             //Switch turns
-            switchTurn();
+            if (slowMo == true)
+            {
+                StartCoroutine(waitForTime(0.5f, switchTurn));
+            }
+            else
+            {
+                switchTurn();
+            }
         }
         else
         {
@@ -184,7 +192,14 @@ public class GameGrid : MonoBehaviour
             slots[column].Find(s => s.isEmpty()).coin = t.GetComponent<Coin>();
             lastCoinPos = new Vector2(column, slots[column].FindIndex(s => s.isEmpty()) - 1);
             //Switch turns
-            switchTurn();
+            if (slowMo == true)
+            {
+                StartCoroutine(waitForTime(0.5f, switchTurn));
+            }
+            else
+            {
+                switchTurn();
+            }
         }
         else
         {
@@ -320,6 +335,17 @@ public class GameGrid : MonoBehaviour
 
 
         return false;
+    }
+
+    //use this for slowing down time during things like impacts and right as you die before we switch scenes. Basically it'll do impact frames.
+    public IEnumerator waitForTime(float duration, Action action)
+    {
+        //Debug.Log("GameGrid: ".Color("purple") + "Waiting...".Color("orange"));
+        yield return new WaitForSecondsRealtime(duration);
+        //Debug.Log("GameGrid: ".Color("purple") + "Calling: ".Color("blue") + action.Method.Name.Color("lime"));
+        //call the action we were given.
+        action();
+        //Debug.Log("GameGrid: ".Color("purple") + "Done!".Color("green"));
     }
 }
 

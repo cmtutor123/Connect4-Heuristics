@@ -443,6 +443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a382db78bd7102649bb219de0e476a40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slowMo: 1
   p1: {fileID: 1623252209}
   p2: {fileID: 747610515}
   lastCoinPos: {x: 0, y: 0}
@@ -1805,15 +1806,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1623252207}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ec8b80bf1134224c8d0d181f74299cc, type: 3}
+  m_Script: {fileID: 11500000, guid: 724a2bc14df96c141a2972aabf0b5588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 0}
-  amIRed: 1
+  amIRed: 0
   isMyTurn: 0
-  curDrawDirection: 0
-  slotNeighbourDrawPos: {x: 0, y: 0}
-  slotNeighbourRect: {x: 1, y: 1}
 --- !u!1 &1709491593
 GameObject:
   m_ObjectHideFlags: 0
@@ -1946,6 +1944,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1709491593}
   m_CullTransparentMesh: 1
+--- !u!1 &1924539644
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1924539646}
+  - component: {fileID: 1924539645}
+  m_Layer: 0
+  m_Name: LDAdvanced
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1924539645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1924539644}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ec8b80bf1134224c8d0d181f74299cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grid: {fileID: 0}
+  amIRed: 1
+  isMyTurn: 0
+  curDrawDirection: 0
+  slotNeighbourDrawPos: {x: 0, y: 0}
+  slotNeighbourRect: {x: 1, y: 1}
+--- !u!4 &1924539646
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1924539644}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.33902574, y: 0.6912514, z: 2.468831}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1957,4 +2005,5 @@ SceneRoots:
   - {fileID: 110618649}
   - {fileID: 813999214}
   - {fileID: 1623252208}
+  - {fileID: 1924539646}
   - {fileID: 747610516}

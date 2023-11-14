@@ -133,7 +133,7 @@ public class LDAdvancedAI : AIPlayer
             {
                 //set desired column to be the first empty slot.
                 currentDesiredColumn = verticalSlots.FindIndex(vs => vs.isEmpty());
-
+                Debug.Log("HERE");
                 //for now return immediately because I don't want to check for threats yet.
                 return currentDesiredColumn;
             }
