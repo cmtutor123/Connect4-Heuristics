@@ -11,7 +11,7 @@ public class AIPlayer : MonoBehaviour
     //set normally from the events, but if they aren't red then they are 
     //yellow and this means that their isMyTurn should be the opposite
     //of what the event returns because the events are based off of a 
-    //boolean called isRed.
+    //boolean called isRedTurn.
     public bool amIRed;
     public bool isMyTurn;
 
@@ -43,17 +43,35 @@ public class AIPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //ignore putting code here.
     }
 
+    /// <summary>
+    /// Called when the "Start" button is pushed
+    /// on the main menu of the scene. Use to make
+    /// your initial move if you go first.
+    /// </summary>
+    /// <param name="isRedTurn">True if it is red's turn, false otherwise</param>
     public virtual void OnGameStart(bool isRedTurn)
     {
+        //basically, if I am red, and it is red's turn, then it's my turn. 
+        //otherwise, I'm yellow and isMyTurn should be the opposite of 
+        //isRedTurn.
+        //this is called an inline conditional and '?' is the "ternary operator"
         isMyTurn = amIRed ? isRedTurn : !isRedTurn;
-        //this is called on game start.
     }
 
+    /// <summary>
+    /// Called when one of the players places a coin
+    /// and the turn switches to the other player.
+    /// </summary>
+    /// <param name="isRedTurn">True if it is red's turn, false otherwise</param>
     public virtual void OnSwitchTurn(bool isRedTurn)
     {
+        //basically, if I am red, and it is red's turn, then it's my turn. 
+        //otherwise, I'm yellow and isMyTurn should be the opposite of 
+        //isRedTurn.
+        //this is called an inline conditional and '?' is the "ternary operator"
         isMyTurn = amIRed ? isRedTurn : !isRedTurn;
         if (isRedTurn)
         {
@@ -65,6 +83,13 @@ public class AIPlayer : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Called when one of the two players
+    /// wins the game.
+    /// 
+    /// You don't really need to use this.
+    /// </summary>
+    /// <param name="didRedWin">True if red won, false otherwise</param>
     public virtual void OnWin(bool didRedWin)
     {
         if (didRedWin)

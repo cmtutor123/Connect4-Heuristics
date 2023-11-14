@@ -29,7 +29,7 @@ public class LDAdvancedAI : AIPlayer
             //slot.
             if (grid.slots[3][0].isEmpty())
             {
-                grid.placeCoin(3);
+                grid.placeCoin(3, this);
                 //add the coin we just put in that column.
                 placedCoinSlots.Add(grid.slots[3].Find(s => !s.isEmpty()));
             }
@@ -93,10 +93,11 @@ public class LDAdvancedAI : AIPlayer
         //maybe try to prioritize creating the T shape that creates an unwinnable situation
         //for the other player?
 
+        int currentDesiredColumn;
 
         foreach (Slot s in placedCoinSlots)
         {
-            int currentDesiredColumn;
+            
 
             List<List<Slot>> neighbours = getNeighbours((int)s.arrayPosition.x, (int)s.arrayPosition.y, 1, 1);
             //start movement direction for searching if we can create a continuous line of 4 by
@@ -104,7 +105,7 @@ public class LDAdvancedAI : AIPlayer
             
 
             //if this coin is surrounded by red then skip it.
-            if (neighbours.TrueForAll(s => s.TrueForAll(sl => !sl.isEmpty())) && !neighbours.TrueForAll(s => s.TrueForAll(sl => sl.coin.CompareTag(this.tag))))
+            if (neighbours.TrueForAll(n => n.TrueForAll(nl => !nl.isEmpty())) && !neighbours.TrueForAll(n => n.TrueForAll(nl => nl.coin.CompareTag(this.tag))))
             {
                 continue;
             }
@@ -119,10 +120,24 @@ public class LDAdvancedAI : AIPlayer
             //first horizontal open slot relative to ourselves.
             if (horizontalSlots.TrueForAll(hs => !hs.isEmpty() && hs.coin.CompareTag(this.tag) || hs.isEmpty()))
             {
-                //return column number of the first empty slot.
-                return horizontalSlots.FindIndex(s => s.isEmpty());
+                //set column number of the first empty slot.
+                currentDesiredColumn = horizontalSlots.FindIndex(hs => hs.isEmpty());
+
+                //for now we return immediately because I don't want to check for threats and do weights yet.
+                return currentDesiredColumn;
             }
-            
+
+            List<Slot> verticalSlots = getDirection(1, (int)s.arrayPosition.x, (int)s.arrayPosition.y, 2, 2);
+
+            if (verticalSlots.TrueForAll(vs => !vs.isEmpty() && vs.coin.CompareTag(this.tag) || vs.isEmpty()))
+            {
+                //set desired column to be the first empty slot.
+                currentDesiredColumn = verticalSlots.FindIndex(vs => vs.isEmpty());
+
+                //for now return immediately because I don't want to check for threats yet.
+                return currentDesiredColumn;
+            }
+
         }
 
         //return -1 if we somehow don't decide. This will throw an error.
