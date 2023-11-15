@@ -586,8 +586,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Grid, Assembly-CSharp
+      - m_Target: {fileID: 9023292749656028588}
+        m_TargetAssemblyTypeName: GameGrid, Assembly-CSharp
         m_MethodName: placeCoin
         m_Mode: 3
         m_Arguments:
@@ -852,8 +852,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Grid, Assembly-CSharp
+      - m_Target: {fileID: 9023292749656028588}
+        m_TargetAssemblyTypeName: GameGrid, Assembly-CSharp
         m_MethodName: placeCoin
         m_Mode: 3
         m_Arguments:
@@ -1103,8 +1103,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Grid, Assembly-CSharp
+      - m_Target: {fileID: 9023292749656028588}
+        m_TargetAssemblyTypeName: GameGrid, Assembly-CSharp
         m_MethodName: placeCoin
         m_Mode: 3
         m_Arguments:
@@ -1615,6 +1615,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8047307111483648363}
+  - component: {fileID: 9023292749656028588}
   - component: {fileID: 5645200240277336872}
   - component: {fileID: 9131927046968987529}
   - component: {fileID: 6180151419408814107}
@@ -1649,6 +1650,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 2322.2056, y: 892.9443}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &9023292749656028588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5795444899279218018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a382db78bd7102649bb219de0e476a40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  p1: {fileID: 0}
+  p2: {fileID: 0}
+  lastCoinPos: {x: 0, y: 0}
+  redCoin: {fileID: 1836455499306930255, guid: 1c49a8da991ed454dafd8027b5bfbb81, type: 3}
+  yellowCoin: {fileID: 815239370483795244, guid: 80c0494b8ad519a41ab65fd20edc2fe3, type: 3}
+  tile: {fileID: 5511019902197819809, guid: ee656214a93a70c4b86573ea1a1435ee, type: 3}
 --- !u!223 &5645200240277336872
 Canvas:
   m_ObjectHideFlags: 0
@@ -1832,8 +1851,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Grid, Assembly-CSharp
+      - m_Target: {fileID: 9023292749656028588}
+        m_TargetAssemblyTypeName: GameGrid, Assembly-CSharp
         m_MethodName: placeCoin
         m_Mode: 3
         m_Arguments:
@@ -2383,8 +2402,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Grid, Assembly-CSharp
+      - m_Target: {fileID: 9023292749656028588}
+        m_TargetAssemblyTypeName: GameGrid, Assembly-CSharp
         m_MethodName: placeCoin
         m_Mode: 3
         m_Arguments:
@@ -2648,8 +2667,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Grid, Assembly-CSharp
+      - m_Target: {fileID: 9023292749656028588}
+        m_TargetAssemblyTypeName: GameGrid, Assembly-CSharp
         m_MethodName: placeCoin
         m_Mode: 3
         m_Arguments:
@@ -2780,8 +2799,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Grid, Assembly-CSharp
+      - m_Target: {fileID: 9023292749656028588}
+        m_TargetAssemblyTypeName: GameGrid, Assembly-CSharp
         m_MethodName: placeCoin
         m_Mode: 3
         m_Arguments:

@@ -200,7 +200,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 519420032}
-  - component: {fileID: 519420033}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
@@ -329,24 +328,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &519420033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a382db78bd7102649bb219de0e476a40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  p1: {fileID: 1623252209}
-  p2: {fileID: 747610515}
-  lastCoinPos: {x: 0, y: 0}
-  redCoin: {fileID: 1836455499306930255, guid: 1c49a8da991ed454dafd8027b5bfbb81, type: 3}
-  yellowCoin: {fileID: 815239370483795244, guid: 80c0494b8ad519a41ab65fd20edc2fe3, type: 3}
-  tile: {fileID: 5511019902197819809, guid: ee656214a93a70c4b86573ea1a1435ee, type: 3}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,7 +774,7 @@ PrefabInstance:
     - target: {fileID: 162103106648812657, guid: 74c0b3ce14d8b98458d920b908da890d, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 519420033}
+      objectReference: {fileID: 0}
     - target: {fileID: 162103106648812657, guid: 74c0b3ce14d8b98458d920b908da890d, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -1182,6 +1163,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9023292749656028588, guid: 74c0b3ce14d8b98458d920b908da890d, type: 3}
+      propertyPath: p1
+      value: 
+      objectReference: {fileID: 1623252209}
+    - target: {fileID: 9023292749656028588, guid: 74c0b3ce14d8b98458d920b908da890d, type: 3}
+      propertyPath: p2
+      value: 
+      objectReference: {fileID: 747610515}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
