@@ -56,6 +56,16 @@ public class LDAIExample : AIPlayer
             //in the List<Slot> where the coin isn't empty. 
 
         }
+
+        //drawing the context on the context panel for this AI.
+        if (isMyTurn)
+        {
+            panel.setContextText("It's My turn!".Color("white"));
+        }
+        else
+        {
+            panel.setContextText("Waiting...".Color("orange"));
+        }
     }
 
     public override void OnWin(bool didRedWin)

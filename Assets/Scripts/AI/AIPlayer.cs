@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AIPlayer : MonoBehaviour
 {
     //reference to the game grid
     public GameGrid grid;
+    //referencee to the UI panel we can set text for.
+    public AIPanelController panel;
 
     //if this AI is red, then all of their booleans for isMyTurn should be 
     //set normally from the events, but if they aren't red then they are 
@@ -38,6 +41,12 @@ public class AIPlayer : MonoBehaviour
     {
         grid = FindObjectOfType<GameGrid>();
         this.tag = amIRed ? "Red" : "Yellow";
+
+        AIPanelController[] panels = FindObjectsOfType<AIPanelController>();
+        //find the panel with the same tag as this object (the same color).
+        panel = panels.First(p => p.CompareTag(this.tag));
+        //set the name of the UI
+        panel.setNameText(this.name);
     }
 
     // Update is called once per frame
@@ -76,10 +85,12 @@ public class AIPlayer : MonoBehaviour
         if (isRedTurn)
         {
             print(amIRed ? this.gameObject.name + ": It's My turn!".Color("red") : this.gameObject.name + ": It's Red's turn!".Color("red"));
+            panel.setContextText(amIRed ? this.gameObject.name + ": It's My turn!".Color("red") : this.gameObject.name + ": It's Red's turn!".Color("red"));
         }
         else
         {
             print(amIRed ? this.gameObject.name + ": It's Yellow's turn!".Color("yellow") : this.gameObject.name + ": It's my turn!".Color("yellow"));
+            panel.setContextText(amIRed ? this.gameObject.name + ": It's Yellow's turn!".Color("yellow") : this.gameObject.name + ": It's my turn!".Color("yellow"));
         }
     }
 

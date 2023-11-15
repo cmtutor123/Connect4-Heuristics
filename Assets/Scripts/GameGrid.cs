@@ -2,20 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 
 
 public class GameGrid : MonoBehaviour
 {
+    //gets set by the slowMo toggle in the UI
     bool slowMo = true;
+    //set by the slider in the UI.
+    float slowMoWaitTime = 0.5f;
 
     //I had to make getters/setters because I couldn't get
     //a reference to the toggle without some hacky stuff
     //and I don't want
-    public bool getSlowMo()
+/*    public bool getSlowMo()
     {
         return slowMo;
     }
@@ -24,6 +28,11 @@ public class GameGrid : MonoBehaviour
     {
         slowMo = b;
     }
+
+    public void setSlowMoWaitTime(float f)
+    {
+        slowMoWaitTime = f;
+    }*/
 
     //p1 and p2 are AI only, they cannot represent a human player,
     //we only use them to see if we should prevent the player from
@@ -51,9 +60,31 @@ public class GameGrid : MonoBehaviour
     //slots[x][y]
     public List<List<Slot>> slots = new List<List<Slot>>(7) { new List<Slot>(5), new List<Slot>(5), new List<Slot>(5), new List<Slot>(5), new List<Slot>(5), new List<Slot>(5), new List<Slot>(5) };
 
+    private Slider timeWaitSlider;
+
     private void Awake()
     {
+        //this gets the slider in our scene at runtime,
+        //because I don't want the inspector references
+        //to cause problems if we do setup scenes
+        //procedurally.
+        timeWaitSlider = GameObject.FindGameObjectWithTag("Slider").GetComponent<Slider>();
+        timeWaitSlider.onValueChanged.AddListener(delegate (float t) { slowMoWaitTime = t; });
+        TextMeshProUGUI sliderText = timeWaitSlider.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+        //add a delegate that sets the text to show the slow time.
+        //this isn't very readable and should not be written this 
+        //way but I am pressed for time.
+        slowMoWaitTime = timeWaitSlider.value;
+        sliderText.text = "Slow Time: " + String.Format("{0:0.00}", timeWaitSlider.value);
+        timeWaitSlider.onValueChanged.AddListener(delegate (float t) { sliderText.text = "Slow Time: " + String.Format("{0:0.00}", t); });
 
+        //THIS IS BAD TO DO IN NORMAL GAMES,
+        //in a normal game your references should
+        //be set up in the inspector and not looped through at the beginning.
+        //it hurts performance and can be a pain in the ass to debug.
+
+        //same thing but in 1 line, we get the toggle and add a listener for the slowmo value.
+        FindObjectOfType<Toggle>().onValueChanged.AddListener(delegate (bool b) { slowMo = b; });
 
         //create a 7x5 2D array of slots.
         //I want the current position to start at 0 and so 
@@ -172,7 +203,7 @@ public class GameGrid : MonoBehaviour
             //Switch turns
             if (slowMo)
             {
-                StartCoroutine(waitForTime(0.5f, switchTurn));
+                StartCoroutine(waitForTime(slowMoWaitTime, switchTurn));
             }
             else
             {
@@ -209,7 +240,7 @@ public class GameGrid : MonoBehaviour
             //Switch turns
             if (slowMo)
             {
-                StartCoroutine(waitForTime(0.5f, switchTurn));
+                StartCoroutine(waitForTime(slowMoWaitTime, switchTurn));
             }
             else
             {
