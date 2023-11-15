@@ -73,3 +73,5 @@ crashlytics-build.properties
 
 #Ignore LD Advanced AI
 \[Aa]ssets\Scripts\AI\LDAdvancedAI.cs
+Assets/Scripts/AI/LDAdvancedAI.cs
+Assets/Scripts/AI/LDAdvancedAI.cs.meta
