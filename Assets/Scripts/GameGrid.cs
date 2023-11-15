@@ -10,7 +10,20 @@ using UnityEngine.UIElements;
 
 public class GameGrid : MonoBehaviour
 {
-    public bool slowMo = false;
+    bool slowMo = true;
+
+    //I had to make getters/setters because I couldn't get
+    //a reference to the toggle without some hacky stuff
+    //and I don't want
+    public bool getSlowMo()
+    {
+        return slowMo;
+    }
+
+    public void setSlowMo(bool b)
+    {
+        slowMo = b;
+    }
 
     //p1 and p2 are AI only, they cannot represent a human player,
     //we only use them to see if we should prevent the player from
@@ -40,6 +53,8 @@ public class GameGrid : MonoBehaviour
 
     private void Awake()
     {
+
+
         //create a 7x5 2D array of slots.
         //I want the current position to start at 0 and so 
         //on the first iteration when it adds 1.25f
@@ -155,7 +170,7 @@ public class GameGrid : MonoBehaviour
             //set lastCoinPos to be the position of the newly created coin.
             lastCoinPos = new Vector2(column, slots[column].FindIndex(s => s.isEmpty()) - 1);
             //Switch turns
-            if (slowMo == true)
+            if (slowMo)
             {
                 StartCoroutine(waitForTime(0.5f, switchTurn));
             }
@@ -192,7 +207,7 @@ public class GameGrid : MonoBehaviour
             slots[column].Find(s => s.isEmpty()).coin = t.GetComponent<Coin>();
             lastCoinPos = new Vector2(column, slots[column].FindIndex(s => s.isEmpty()) - 1);
             //Switch turns
-            if (slowMo == true)
+            if (slowMo)
             {
                 StartCoroutine(waitForTime(0.5f, switchTurn));
             }
