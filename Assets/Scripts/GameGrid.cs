@@ -13,6 +13,10 @@ public class GameGrid : MonoBehaviour
 {
     //gets set by the slowMo toggle in the UI
     bool slowMo = true;
+    
+    //set to true during waiting coroutine 
+    bool isWaiting = false;
+
     //set by the slider in the UI.
     float slowMoWaitTime = 0.5f;
 
@@ -181,6 +185,11 @@ public class GameGrid : MonoBehaviour
     //this version of the method can only be called by the player.
     public void placeCoin(int column)
     {
+        if (isWaiting)
+        {
+            return;
+        }
+
         //verify it is the humans turn, human is always red when against AI.
         if (isP1Playing && p1.amIRed && isRedTurn || isP1Playing && !p1.amIRed && !isRedTurn)
         {
@@ -218,8 +227,13 @@ public class GameGrid : MonoBehaviour
 
     public void placeCoin(int column, AIPlayer cpu)
     {
+        if (isWaiting)
+        {
+            return;
+        }
+
         //if it's not the AI's turn, don't let them make a move.
-        if (/*!(cpu == p1 && cpu != p2) || !(cpu == p2 && cpu != p1) && */cpu.amIRed && !isRedTurn || !cpu.amIRed && isRedTurn)
+        if (cpu.amIRed && !isRedTurn || !cpu.amIRed && isRedTurn)
         {
             Debug.LogWarning("IT IS NOT " + cpu.gameObject.name + " TURN, VERIFY YOU ARE NOT TRYING TO PLAY DURING ANOTHER PLAYER'S TURN");
             //TODO: play audio and grey out the column they attempt to play on for a moment.
@@ -386,8 +400,10 @@ public class GameGrid : MonoBehaviour
     //use this for slowing down time during things like impacts and right as you die before we switch scenes. Basically it'll do impact frames.
     public IEnumerator waitForTime(float duration, Action action)
     {
+        isWaiting = true;
         //Debug.Log("GameGrid: ".Color("purple") + "Waiting...".Color("orange"));
         yield return new WaitForSecondsRealtime(duration);
+        isWaiting = false;
         //Debug.Log("GameGrid: ".Color("purple") + "Calling: ".Color("blue") + action.Method.Name.Color("lime"));
         //call the action we were given.
         action();
