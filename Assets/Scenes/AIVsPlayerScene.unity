@@ -760,10 +760,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 309321143258286054, guid: 74c0b3ce14d8b98458d920b908da890d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 467603710063968113, guid: 74c0b3ce14d8b98458d920b908da890d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -836,14 +832,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1168775627349480894, guid: 74c0b3ce14d8b98458d920b908da890d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1973349464971428115, guid: 74c0b3ce14d8b98458d920b908da890d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 2273145237035570103, guid: 74c0b3ce14d8b98458d920b908da890d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -890,6 +878,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2563233769162300857, guid: 74c0b3ce14d8b98458d920b908da890d, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5188333007812186452, guid: 74c0b3ce14d8b98458d920b908da890d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5188333007812186452, guid: 74c0b3ce14d8b98458d920b908da890d, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5286607310760430944, guid: 74c0b3ce14d8b98458d920b908da890d, type: 3}
@@ -948,13 +944,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 6532256618900855696, guid: 74c0b3ce14d8b98458d920b908da890d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
+    - target: {fileID: 6821910454826316162, guid: 74c0b3ce14d8b98458d920b908da890d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7101153202726624516, guid: 74c0b3ce14d8b98458d920b908da890d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
+    - target: {fileID: 6821910454826316162, guid: 74c0b3ce14d8b98458d920b908da890d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6821910454826316162, guid: 74c0b3ce14d8b98458d920b908da890d, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7400919459135083860, guid: 74c0b3ce14d8b98458d920b908da890d, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1084,10 +1084,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8319330856473266997, guid: 74c0b3ce14d8b98458d920b908da890d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 8466908786872453896, guid: 74c0b3ce14d8b98458d920b908da890d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1135,10 +1131,6 @@ PrefabInstance:
     - target: {fileID: 8516669624146795708, guid: 74c0b3ce14d8b98458d920b908da890d, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8683512291818649139, guid: 74c0b3ce14d8b98458d920b908da890d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
