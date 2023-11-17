@@ -18,6 +18,7 @@ public class AIPlayer : MonoBehaviour
     public bool amIRed;
     public bool isMyTurn;
 
+    //don't override this in your script.
     private void OnEnable()
     {
         //add callback to OnGameStart global event for our OnGameStart method.
@@ -28,6 +29,7 @@ public class AIPlayer : MonoBehaviour
         WinEvent.OnWin += OnWin;
     }
 
+    //don't override this in your script.
     private void OnDisable()
     {
         //remove callbacks so when we switch scenes these don't get called anymore.
@@ -37,11 +39,14 @@ public class AIPlayer : MonoBehaviour
     }
 
     // Start is called before the first frame update
+    //don't override this method in your script. 
+    //this shouldn't be used to interact with the GameGrid.
     void Start()
     {
         grid = FindObjectOfType<GameGrid>();
         this.tag = amIRed ? "Red" : "Yellow";
 
+        //gets the panels. Ignore.
         AIPanelController[] panels = FindObjectsOfType<AIPanelController>();
         //find the panel with the same tag as this object (the same color).
         panel = panels.First(p => p.CompareTag(this.tag));
@@ -50,6 +55,7 @@ public class AIPlayer : MonoBehaviour
     }
 
     // Update is called once per frame
+    //don't override this in your script.
     void Update()
     {
         //ignore putting code here.
